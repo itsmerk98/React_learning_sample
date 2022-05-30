@@ -3,8 +3,8 @@ import Product from './Product';
 
 export default function ProductList(props) {
   return (
-      props.productList.map((Product,i) => {
-        return <Product product={Product} key={i} />
+    props.productList.map((product, i) => {
+      return <Product product={product} key={i} incrementQuantity={props.incrementQuantity} index={i} decrementQuantity={props.decrementQuantity}/>
     })
   )
 }

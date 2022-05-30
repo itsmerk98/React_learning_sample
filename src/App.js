@@ -3,10 +3,13 @@ import './App.css';
 import Navbar from './components/Navbar';
 import ProductList from './components/ProductList';
 import Footer from './components/Footer.js';
+import React, { useState } from 'react';
+
+
 
 
 function App() {
-  const productList = [
+  const products = [
     {
       price: 99999,
       name: "iPhone ios Max",
@@ -18,13 +21,29 @@ function App() {
       quantity: 0,
     }
   ]
+
+  let [productList, setProductList] = useState(products)
+
+  const incrementQuantity=(index) => {
+    let newProductList = [...productList]
+    newProductList[index].quantity++
+    setProductList(newProductList);
+  }
+
+  const decrementQuantity=(index) => {
+    let newProductList = [...productList]
+    if(newProductList)
+    newProductList[index].quantity--
+    setProductList(newProductList);
+  }
+
   return (
     <>
       <Navbar />
-      <main>
-        <ProductList product={productList} />
+      <main className='container mt-5'>
+        <ProductList productList={productList} incrementQuantity={incrementQuantity} decrementQuantity={decrementQuantity} />
       </main>
-      <Footer/>
+      <Footer />
     </>
   );
 }
