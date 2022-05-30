@@ -8,6 +8,8 @@ import React, { useState } from 'react';
 
 
 
+
+
 function App() {
   const products = [
     {
@@ -23,18 +25,26 @@ function App() {
   ]
 
   let [productList, setProductList] = useState(products)
+  let [totalAmount, setTotalAmount] = useState(0)
 
   const incrementQuantity=(index) => {
-    let newProductList = [...productList]
-    newProductList[index].quantity++
+    let newProductList = [...productList];
+    let newTotalAmount = totalAmount;
+    newProductList[index].quantity++;
+    newTotalAmount += newProductList[index].price;
     setProductList(newProductList);
+    setTotalAmount(newTotalAmount);
   }
 
   const decrementQuantity=(index) => {
     let newProductList = [...productList]
-    if(newProductList)
-    newProductList[index].quantity--
+    let newTotalAmount = totalAmount;
+    if (newProductList[index].quantity > 0) {
+      newProductList[index].quantity--;
+      newTotalAmount -= newProductList[index].price;
+    } 
     setProductList(newProductList);
+    setTotalAmount(newTotalAmount);
   }
 
   return (
@@ -43,7 +53,7 @@ function App() {
       <main className='container mt-5'>
         <ProductList productList={productList} incrementQuantity={incrementQuantity} decrementQuantity={decrementQuantity} />
       </main>
-      <Footer />
+      <Footer totalAmount={totalAmount} />
     </>
   );
 }
